@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import { sample } from '../../utils';
-import { WORDS } from '../../data';
+import { sample } from "../../utils";
+import { WORDS } from "../../data";
 
 import GuessInput from "../GuessInput";
 
@@ -11,9 +11,19 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  const [words, setWords] = useState([]);
+  function onWordSubmit(word) {
+    const newWords = [...words, word];
+    setWords(newWords);
+  }
   return (
     <>
-      <GuessInput />
+      <GuessInput onWordSubmit={onWordSubmit} />
+      <div className="guess-results">
+        {words.map((word) => {
+          return <p key={word}>{word}</p>;
+        })}
+      </div>
     </>
   );
 }
