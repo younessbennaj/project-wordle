@@ -1,10 +1,11 @@
 import { useState } from "react";
 
-function GuessInput() {
+function GuessInput({ onWordSubmit }) {
   const [text, setText] = useState("");
   function handleSubmit(event) {
     event.preventDefault();
     console.log({ answer: text });
+    onWordSubmit(text);
     setText("");
   }
 
