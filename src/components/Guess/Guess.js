@@ -4,6 +4,7 @@ import { MAX_LENGTH_WORD } from "../../constants";
 
 function Guess({ answer, guess }) {
   const checks = checkGuess(guess, answer);
+
   return (
     <p className="guess">
       {range(0, MAX_LENGTH_WORD).map((id) => {

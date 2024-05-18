@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import { MAX_LENGTH_WORD } from "../../constants";
 
-function GuessInput({ onWordSubmit }) {
+function GuessInput({ disabled, onWordSubmit }) {
   const [text, setText] = useState("");
   function handleSubmit(event) {
     event.preventDefault();
@@ -20,6 +20,7 @@ function GuessInput({ onWordSubmit }) {
     <form className="guess-input-wrapper" onSubmit={handleSubmit}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
+        disabled={disabled}
         id="guess-input"
         onChange={handleTextChange}
         type="text"
