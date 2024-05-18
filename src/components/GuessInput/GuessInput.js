@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { MAX_LENGTH_WORD } from "../../constants";
+
 function GuessInput({ onWordSubmit }) {
   const [text, setText] = useState("");
   function handleSubmit(event) {
@@ -21,10 +23,10 @@ function GuessInput({ onWordSubmit }) {
         id="guess-input"
         onChange={handleTextChange}
         type="text"
-        minLength={5}
-        maxLength={5}
-        pattern="[a-zA-Z]{5}"
-        title="5 letter word"
+        minLength={MAX_LENGTH_WORD}
+        maxLength={MAX_LENGTH_WORD}
+        pattern={`[a-zA-Z]{${MAX_LENGTH_WORD}}`}
+        title={`${MAX_LENGTH_WORD} letter word`}
         value={text}
       />
     </form>
