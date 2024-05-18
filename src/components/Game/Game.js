@@ -5,31 +5,52 @@ import { WORDS } from "../../data";
 
 import GuessInput from "../GuessInput";
 import Guess from "../Guess";
+import Keyboard from "../Keyboard";
 
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 import { checkGuess } from "../../game-helpers";
 
+import { HappyBanner, SadBanner } from "../Banners/Banners";
+
 // Pick a random word on every pageload.
-const answer = sample(WORDS);
 // To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
 
 function Game() {
+  const [answer, setAnswer] = useState(() => {
+    return sample(WORDS);
+  });
+  console.info({ answer });
   const [guesses, setGuesses] = useState([]);
   const [isWin, setIsWin] = useState(false);
+  const [checkedLetters, setCheckedLetters] = useState({});
 
   const isLoose = guesses.length === 6 && !isWin;
 
   function onWordSubmit(word) {
     const newWords = [...guesses, word];
     const checks = checkGuess(word, answer);
-    setIsWin(
-      checks.every((check) => {
-        return check.status === "correct";
-      })
+
+    const obj = checks.reduce(
+      (acc, cur) => {
+        return { ...acc, [cur.letter]: cur.status };
+      },
+      { ...checkedLetters }
     );
 
+    setCheckedLetters(obj);
+
+    setIsWin(checks.every((check) => check.status === "correct"));
+
     setGuesses(newWords);
+  }
+
+  function handleReset() {
+    setGuesses([]);
+    setIsWin(false);
+    setCheckedLetters({});
+    setAnswer(() => {
+      return sample(WORDS);
+    });
   }
 
   return (
@@ -41,21 +62,13 @@ function Game() {
       </div>
       <GuessInput disabled={isWin || isLoose} onWordSubmit={onWordSubmit} />
       {isWin && (
-        <div className="happy banner">
-          <p>
-            <strong>Congratulations!</strong> Got it in
-            <strong>{guesses.length} guesses</strong>.
-          </p>
-        </div>
+        <HappyBanner
+          guessesNumber={guesses.length}
+          onResetClick={handleReset}
+        />
       )}
-
-      {isLoose && (
-        <div className="sad banner">
-          <p>
-            Sorry, the correct answer is <strong>{answer}</strong>.
-          </p>
-        </div>
-      )}
+      {isLoose && <SadBanner answer={answer} onResetClick={handleReset} />}
+      <Keyboard checkedLetters={checkedLetters} />
     </>
   );
 }

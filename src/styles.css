@@ -196,6 +196,44 @@ h1 {
   border: 0;
 }
 
+.keyboard {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard-row {
+  display: flex;
+  gap: 4px;
+}
+
+.keyboard-key {
+  background-color: var(--color-gray-700);
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.keyboard-key.correct {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.keyboard-key.misplaced {
+  background: var(--color-warning);
+  color: white;
+}
+
+.keyboard-key.incorrect {
+  background: var(--color-gray-300);
+  color: white;
+}
+
 /*
   Modal styles
 

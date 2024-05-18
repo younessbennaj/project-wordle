@@ -6,7 +6,6 @@ function GuessInput({ disabled, onWordSubmit }) {
   const [text, setText] = useState("");
   function handleSubmit(event) {
     event.preventDefault();
-    console.log({ answer: text });
     onWordSubmit(text);
     setText("");
   }
